@@ -39,7 +39,7 @@ public class Article implements Serializable {
     /**
      * 标签
      */
-    private Integer tab;
+    private Integer tId;
 
     /**
      * 展示图
@@ -69,7 +69,7 @@ public class Article implements Serializable {
     /**
      * 公开 0隐私 1公开
      */
-    private Integer pub=1;
+    private Integer pub = 1;
 
     /**
      * 创建人
