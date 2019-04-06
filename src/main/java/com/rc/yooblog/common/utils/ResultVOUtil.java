@@ -33,4 +33,15 @@ public class ResultVOUtil {
         resultVO.setMsg("成功");
         return resultVO;
     }
+    /**
+     * 描述: 成功（没有data）
+     * @Param
+     * @return
+     */
+    public static ResultVO error() {
+        ResultVO<Object> resultVO = new ResultVO<>();
+        resultVO.setCode(400);
+        resultVO.setMsg("失败");
+        return resultVO;
+    }
 }

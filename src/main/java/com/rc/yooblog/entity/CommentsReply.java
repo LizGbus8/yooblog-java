@@ -29,7 +29,7 @@ public class CommentsReply implements Serializable {
     /**
      * 评论编号
      */
-    private String comentsId;
+    private String commentsId;
 
     /**
      * 回复者编号

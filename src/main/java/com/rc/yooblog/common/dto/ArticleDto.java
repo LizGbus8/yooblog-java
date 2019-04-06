@@ -51,6 +51,11 @@ public class ArticleDto {
     private Integer shareCount;
 
     /**
+     * 评论数
+     */
+    private Integer replyCount;
+
+    /**
      * 创建人
      */
     private String author;

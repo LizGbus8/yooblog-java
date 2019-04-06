@@ -6,16 +6,23 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rc.yooblog.common.dto.ArticleDto;
 import com.rc.yooblog.entity.Article;
+import com.rc.yooblog.entity.CommentsInfo;
 import com.rc.yooblog.mapper.ArticleMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.rc.yooblog.common.contants.ReplyType.TO_ARTICLE;
 
 /**
  * 作者：flandre on 2019/4/2 11:23
  */
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IService<Article> {
+
+    @Autowired
+    CommentsInfoServiceImpl commentsInfoService;
 
     /**
      * 最近发布
@@ -47,7 +54,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param tId
      * @return
      */
-    public IPage<ArticleDto> getArticleByTabId(Integer tId, Integer current, Integer size) {
+    @SuppressWarnings("Duplicates")
+    public IPage<ArticleDto> getArticlesByTabId(Integer tId, Integer current, Integer size) {
         //1.拼接查询条件
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("t_id", tId);
@@ -58,5 +66,32 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         IPage<Article> articleIPage = page(page, queryWrapper);
         //3.转换泛型
         return articleIPage.convert(ArticleServiceImpl::apply);
+    }
+
+    /**
+     * 获取文章详情
+     * @param aId 文章Id
+     * @return
+     */
+    public ArticleDto getArticle(String aId) {
+        //1.拼接文章查询条件
+        QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
+        articleQueryWrapper.eq("a_id", aId);
+        articleQueryWrapper.eq("pub", 1);
+        //2.执行文章查询
+        Article article = baseMapper.selectOne(articleQueryWrapper);
+        //3.拼接评论数查询条件
+        QueryWrapper<CommentsInfo> commentsInfoQueryWrapper = new QueryWrapper<>();
+        commentsInfoQueryWrapper.eq("owner_id", aId);
+        commentsInfoQueryWrapper.eq("type", TO_ARTICLE);
+        commentsInfoQueryWrapper.eq("valid", 1);
+        //4.执行评论数查询
+        int count = commentsInfoService.count(commentsInfoQueryWrapper);
+        //5.填充DTO
+        ArticleDto articleDto = new ArticleDto();
+        BeanUtils.copyProperties(article, articleDto);
+        articleDto.setReplyCount(count);
+
+        return articleDto;
     }
 }
