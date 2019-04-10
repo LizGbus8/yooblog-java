@@ -2,6 +2,8 @@ package com.rc.yooblog.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -24,7 +26,8 @@ public class CommentsInfo implements Serializable {
     /**
      * 编号
      */
-    private String cId;
+    @TableId
+    private String cid;
 
     /**
      * 类型 0to留言 1to文章评论 2to人

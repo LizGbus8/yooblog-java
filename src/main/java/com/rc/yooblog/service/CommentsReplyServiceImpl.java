@@ -43,5 +43,6 @@ public class CommentsReplyServiceImpl extends ServiceImpl<CommentsReplyMapper, C
                 .setIp(remoteIP)
                 .setAddress(city)
                 .setContent(content);
+        save(commentsReply);
     }
 }

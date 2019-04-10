@@ -2,6 +2,8 @@ package com.rc.yooblog.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -24,6 +26,7 @@ public class CommentsReply implements Serializable {
     /**
      * 回复编号
      */
+    @TableId
     private String rId;
 
     /**

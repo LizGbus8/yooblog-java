@@ -55,17 +55,17 @@ public class CommentController {
 
     @PostMapping("/reply/comment")
     @ApiOperation(value = "对留言或者评论的回复")
-    public ResultVO reply2Talk(@ApiParam("回复的主体Id") @RequestParam("cid") String cid, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request) {
+    public ResultVO reply2Comment(@ApiParam("回复的主体Id,即cid") @RequestParam("id") String cid, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request) {
         //获取客户端ip
         String remoteIP = IpUtils.getRemoteIP(request);
-        commentsInfoService.addReply2Talk(cid, nickName, email, website, content, remoteIP);
+        commentsInfoService.addReply2Comment(cid, nickName, email, website, content, remoteIP);
         return ResultVOUtil.success();
     }
 
     @PostMapping("/reply/reply")
     @ApiOperation(value = "对留言或者评论的回复")
-    public ResultVO reply2Reply(@ApiParam("子回复Id") @RequestParam("rid") String rid, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request) {
-        //获取客户端ip
+    public ResultVO reply2Reply(@ApiParam("子回复Id,即rid") @RequestParam("id") String rid, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request) {
+        //获取客户端ipr
         String remoteIP = IpUtils.getRemoteIP(request);
         commentsReplyService.addReply2Reply(rid, nickName, email, website, content, remoteIP);
         return ResultVOUtil.success();

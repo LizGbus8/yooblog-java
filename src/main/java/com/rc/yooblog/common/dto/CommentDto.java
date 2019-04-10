@@ -13,7 +13,7 @@ public class CommentDto {
     /**
      * 编号
      */
-    private String cId;
+    private String cid;
 
     /**
      * 被评论者编号

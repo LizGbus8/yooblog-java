@@ -133,6 +133,7 @@ public class GlobalExceptionHandler {
 //    }
 
     private <T extends Throwable> ResultVO exceptionFormat(Integer code, T ex) {
+        ex.printStackTrace();
         return ResultVOUtil.error();
     }
 }

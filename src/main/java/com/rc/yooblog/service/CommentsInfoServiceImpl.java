@@ -80,7 +80,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
             return null;
         }
         //3.获取cId的集合
-        List<String> cIds = commentsInfoPage.getRecords().stream().map(CommentsInfo::getCId).collect(Collectors.toList());
+        List<String> cIds = commentsInfoPage.getRecords().stream().map(CommentsInfo::getCid).collect(Collectors.toList());
         //4.批量查询回复
         QueryWrapper<CommentsReply> replyQueryWrapper = new QueryWrapper<>();
         replyQueryWrapper.in("comments_id",cIds);
@@ -93,7 +93,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
             BeanUtils.copyProperties(commentsInfo, commentDto);
             List<ReplyDto> replyDtos = commentsReplies.stream()
                     //过滤出该cId的回复
-                    .filter(e -> e.getCommentsId().equals(commentDto.getCId()))
+                    .filter(e -> e.getCommentsId().equals(commentDto.getCid()))
                     //转化为Dto类型
                     .map((e) -> {
                         ReplyDto replyDto = new ReplyDto();
@@ -136,7 +136,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
         //TODO
         //5.保存数据库
         CommentsInfo commentsInfo = new CommentsInfo();
-        commentsInfo.setCId(KeyUtil.getKey())
+        commentsInfo.setCid(KeyUtil.getKey())
                 .setType(0)
                 .setFromId(KeyUtil.getKey())
                 .setFromName(nickName)
@@ -165,7 +165,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
      * @param content
      * @param remoteIP
      */
-    public void addReply2Talk(String cid, String nickName, String email, String website, String content, String remoteIP) {
+    public void addReply2Comment(String cid, String nickName, String email, String website, String content, String remoteIP) {
         //1.查询回复主体的信息
         CommentsInfo commentsInfo = getById(cid);
         //2.查询地址
@@ -173,7 +173,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
         //3.保存数据库
         CommentsReply commentsReply = new CommentsReply();
         commentsReply.setRId(KeyUtil.getKey())
-                .setCommentsId(commentsInfo.getCId())
+                .setCommentsId(commentsInfo.getCid())
                 .setFromId(KeyUtil.getKey())
                 .setFromName(nickName)
                 .setFromEmail(email)
@@ -183,6 +183,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
                 .setAddress(city)
                 .setRId(KeyUtil.getKey())
                 .setContent(content);
+        commentsReplyService.save(commentsReply);
     }
 }
 
