@@ -82,6 +82,16 @@ public class CommentsInfo implements Serializable {
     private String address;
 
     /**
+     * 留言标题诗文引用
+     */
+    private String quoteTitle;
+
+    /**
+     * 留言标题诗文引用
+     */
+    private String quoteContent;
+
+    /**
      * 是否有效 0删除
      */
     private Integer valid;

@@ -33,7 +33,7 @@ public class KeyUtil {
         return key.toString();
     }
 
-    public static synchronized String getToken() {
+    public static synchronized String getUUID() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }

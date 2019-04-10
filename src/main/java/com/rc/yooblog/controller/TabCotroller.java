@@ -17,7 +17,7 @@ import java.util.List;
  * 描述：
  */
 @RestController
-@Api("标签API")
+@Api(value = "标签API",tags = "标签")
 public class TabCotroller {
     @Autowired
     TabServiceImpl tabService;

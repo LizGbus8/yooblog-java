@@ -51,6 +51,16 @@ public class CommentDto {
     private String address;
 
     /**
+     * 留言标题诗文引用
+     */
+    private String quoteTitle;
+
+    /**
+     * 留言标题诗文引用
+     */
+    private String quoteContent;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createdTime;

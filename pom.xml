@@ -75,6 +75,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.arronlong/httpclientutil -->
+        <dependency>
+            <groupId>com.arronlong</groupId>
+            <artifactId>httpclientutil</artifactId>
+            <version>1.0.4</version>
+        </dependency>
         <!--&lt;!&ndash;mybatis 生成代码相关&ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>com.baomidou</groupId>-->

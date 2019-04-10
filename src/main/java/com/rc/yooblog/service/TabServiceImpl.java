@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
 @Service
 public class TabServiceImpl extends ServiceImpl<TabMapper, Tab> implements IService<Tab> {
 
+    /**
+     * 获取所有的标签
+     * @return
+     */
     public List<TabDto> getAllTab() {
         //1.查询
         List<Tab> tabs = list();
