@@ -23,6 +23,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rc.yooblog.common.contants.ReplyType.TO_ARTICLE;
+import static com.rc.yooblog.common.contants.ReplyType.TO_TALK;
+
 /**
  * <p>
  * 评论主表 评论&留言 服务实现类
@@ -126,7 +129,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
         }
         //2.查询当前楼层
         QueryWrapper<CommentsInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("type", 0);
+        queryWrapper.eq("type", TO_TALK);
         queryWrapper.eq("valid", 1);
         //当前楼层
         int currentFloor = count(queryWrapper);
@@ -184,6 +187,52 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
                 .setRId(KeyUtil.getKey())
                 .setContent(content);
         commentsReplyService.save(commentsReply);
+    }
+
+    /**
+     * 添加文章评论
+     * @param ownerId
+     * @param nickName
+     * @param email
+     * @param website
+     * @param content
+     * @param remoteIP
+     * @return
+     */
+    public CommentDto addArticleComment(String ownerId, String nickName, String email, String website, String content, String remoteIP) {
+        //1.查询该文章的评论数
+        //1.1 拼接查询条件
+        QueryWrapper<CommentsInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type", TO_ARTICLE);
+        queryWrapper.eq("owner_id", ownerId);
+        int count = count(queryWrapper);
+        //2.获取地址
+        String city = IpUtils.getCity(remoteIP);
+        //3.获取头像
+        String avatar = AvatarUtils.getQQAvatar(email);
+        if (avatar == null) {
+            avatar = AvatarUtils.getGravatarAvatar(email);
+        }
+        //4.保存数据路
+        CommentsInfo commentsInfo = new CommentsInfo();
+        commentsInfo.setCid(KeyUtil.getKey())
+                .setType(TO_ARTICLE)
+                .setOwnerId(ownerId)
+                .setFromId(KeyUtil.getKey())
+                .setFromAvatar(avatar)
+                .setFromName(nickName)
+                .setEmail(email)
+                .setWebsite(website)
+                .setContent(content)
+                .setAddress(city)
+                .setFloor(count+1);
+        save(commentsInfo);
+        //6.返回添加结果
+        CommentDto commentDto = new CommentDto();
+        BeanUtils.copyProperties(commentsInfo, commentDto);
+        commentDto.setCreatedTime(LocalDateTime.now());
+
+        return commentDto;
     }
 }
 

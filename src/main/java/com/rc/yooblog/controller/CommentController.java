@@ -53,6 +53,15 @@ public class CommentController {
         return ResultVOUtil.success(commentDto);
     }
 
+    @PostMapping("/article/comment")
+    @ApiOperation(value = "文章回复")
+    public ResultVO articleComment(@ApiParam("评论所属ownerId") @RequestParam(value = "id") String ownerId, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request){
+        //获取客户端ip
+        String remoteIP = IpUtils.getRemoteIP(request);
+        CommentDto commentDto = commentsInfoService.addArticleComment(ownerId, nickName, email, website, content, remoteIP);
+        return ResultVOUtil.success(commentDto);
+    }
+
     @PostMapping("/reply/comment")
     @ApiOperation(value = "对留言或者评论的回复")
     public ResultVO reply2Comment(@ApiParam("回复的主体Id,即cid") @RequestParam("id") String cid, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request) {
