@@ -32,17 +32,22 @@ public class Record implements Serializable {
     /**
      * 简说
      */
-    private String summary;
+    private String content;
 
     /**
      * 引用链接
      */
-    private String link;
+    private String reference;
 
     /**
      * 引用说明
      */
-    private String linkDesc;
+    private String referenceDesc;
+
+    /**
+     * 作者
+     */
+    private String author;
 
     /**
      * 是否有效 0删除

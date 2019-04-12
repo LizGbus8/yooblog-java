@@ -20,7 +20,7 @@ import java.util.List;
  * 描述：
  */
 @RestController
-@Api(value = "评论相关API", tags = "评论")
+@Api(value = "评论留言相关API", tags = "评论&留言")
 public class CommentController {
 
     @Autowired
