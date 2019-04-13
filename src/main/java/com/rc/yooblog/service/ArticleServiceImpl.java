@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.rc.yooblog.common.dto.ArticleDto;
 import com.rc.yooblog.entity.Article;
 import com.rc.yooblog.entity.CommentsInfo;
+import com.rc.yooblog.exception.YooException;
 import com.rc.yooblog.mapper.ArticleMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.rc.yooblog.common.contants.ReplyType.TO_ARTICLE;
+import static com.rc.yooblog.exception.ResultEnum.ARTICLE_NOT_EXIST;
 
 /**
  * 作者：flandre on 2019/4/2 11:23
@@ -33,7 +35,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param size 每页条数
      * @return
      */
-    @SuppressWarnings("Duplicates")
     public IPage<ArticleDto> getLately(Integer current, Integer size) {
         //1.拼接查询条件
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
@@ -57,7 +58,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param tId
      * @return
      */
-    @SuppressWarnings("Duplicates")
     public IPage<ArticleDto> getArticlesByTabId(Integer tId, Integer current, Integer size) {
         //1.拼接查询条件
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
@@ -76,13 +76,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param aId 文章Id
      * @return
      */
-    public ArticleDto getArticle(String aId) {
+    public ArticleDto getArticle(String aId) throws YooException {
         //1.拼接文章查询条件
         QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
         articleQueryWrapper.eq("a_id", aId);
         articleQueryWrapper.eq("pub", 1);
         //2.执行文章查询
         Article article = baseMapper.selectOne(articleQueryWrapper);
+        if (article == null) {
+            throw new YooException(ARTICLE_NOT_EXIST);
+        }
         //3.拼接评论数查询条件
         QueryWrapper<CommentsInfo> commentsInfoQueryWrapper = new QueryWrapper<>();
         commentsInfoQueryWrapper.eq("owner_id", aId);

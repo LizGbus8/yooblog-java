@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.rc.yooblog.common.dto.ArticleDto;
 import com.rc.yooblog.common.utils.ResultVOUtil;
 import com.rc.yooblog.common.vo.ResultVO;
+import com.rc.yooblog.exception.YooException;
 import com.rc.yooblog.service.ArticleServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +48,7 @@ public class ArticleController {
 
     @GetMapping("/article/{aId}")
     @ApiOperation(value = "获取文章详情")
-    public ResultVO article(@PathVariable("aId") String aId) {
+    public ResultVO article(@PathVariable("aId") String aId) throws YooException {
         ArticleDto articleDto = articleService.getArticle(aId);
         return ResultVOUtil.success(articleDto);
     }

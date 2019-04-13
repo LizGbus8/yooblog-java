@@ -34,14 +34,27 @@ public class ResultVOUtil {
         return resultVO;
     }
     /**
-     * 描述: 成功（没有data）
+     * 描述:
      * @Param
      * @return
      */
-    public static ResultVO error() {
+    public static ResultVO error(Integer code) {
         ResultVO<Object> resultVO = new ResultVO<>();
-        resultVO.setCode(400);
+        resultVO.setCode(code);
         resultVO.setMsg("失败");
+        return resultVO;
+    }
+
+    /**
+     *
+     * @param code
+     * @param msg
+     * @return
+     */
+    public static ResultVO error(Integer code,String msg) {
+        ResultVO<Object> resultVO = new ResultVO<>();
+        resultVO.setCode(code);
+        resultVO.setMsg(msg);
         return resultVO;
     }
 }

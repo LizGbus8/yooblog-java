@@ -66,7 +66,6 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
         //1.拼接查询条件
         QueryWrapper<CommentsInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", 0);
-        Page<CommentsInfo> page = new Page<>(current, size);
         //2.执行查询
         return query(queryWrapper, current, size);
     }
@@ -151,10 +150,11 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
                 .setAddress(city)
                 .setFloor(currentFloor);
         save(commentsInfo);
+
         //6.返回添加结果
         CommentDto commentDto = new CommentDto();
-        BeanUtils.copyProperties(commentsInfo, commentDto);
-        commentDto.setCreatedTime(LocalDateTime.now());
+        CommentsInfo info = getById(commentsInfo.getCid());
+        BeanUtils.copyProperties(info, commentDto);
 
         return commentDto;
     }
@@ -168,7 +168,7 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
      * @param content
      * @param remoteIP
      */
-    public void addReply2Comment(String cid, String nickName, String email, String website, String content, String remoteIP) {
+    public ReplyDto addReply2Comment(String cid, String nickName, String email, String website, String content, String remoteIP) {
         //1.查询回复主体的信息
         CommentsInfo commentsInfo = getById(cid);
         //2.查询地址
@@ -187,6 +187,13 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
                 .setRId(KeyUtil.getKey())
                 .setContent(content);
         commentsReplyService.save(commentsReply);
+
+        //4.返回保存结果
+        ReplyDto replyDto = new ReplyDto();
+        CommentsReply info = commentsReplyService.getById(commentsReply.getRId());
+        BeanUtils.copyProperties(info, replyDto);
+
+        return replyDto;
     }
 
     /**
@@ -227,10 +234,11 @@ public class CommentsInfoServiceImpl extends ServiceImpl<CommentsInfoMapper, Com
                 .setAddress(city)
                 .setFloor(count+1);
         save(commentsInfo);
-        //6.返回添加结果
+
+        //5.返回添加结果
         CommentDto commentDto = new CommentDto();
-        BeanUtils.copyProperties(commentsInfo, commentDto);
-        commentDto.setCreatedTime(LocalDateTime.now());
+        CommentsInfo info = getById(commentsInfo.getCid());
+        BeanUtils.copyProperties(info, commentDto);
 
         return commentDto;
     }

@@ -33,107 +33,115 @@ import java.io.IOException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    private static final String logExceptionFormat = "Capture Exception By GlobalExceptionHandler: Code: %s Detail: %s";
+    private static final String logExceptionFormat = "Capture Exception By GlobalExceptionHandler: Code: {} Detail: {}";
 
 
-    //运行时异常
     @ExceptionHandler(RuntimeException.class)
     public ResultVO runtimeExceptionHandler(RuntimeException ex) {
+        log.error("运行时异常");
+
         return exceptionFormat(1, ex);
     }
 
-    //空指针异常
     @ExceptionHandler(NullPointerException.class)
     public ResultVO nullPointerExceptionHandler(NullPointerException ex) {
+        log.error("空指针异常");
         return exceptionFormat(2, ex);
     }
 
-    //类型转换异常
     @ExceptionHandler(ClassCastException.class)
     public ResultVO classCastExceptionHandler(ClassCastException ex) {
+        log.error("类型转换异常");
+
         return exceptionFormat(3, ex);
     }
 
-    //IO异常
     @ExceptionHandler(IOException.class)
     public ResultVO iOExceptionHandler(IOException ex) {
+        log.error("IO异常");
+
         return exceptionFormat(4, ex);
     }
 
-    //未知方法异常
     @ExceptionHandler(NoSuchMethodException.class)
     public ResultVO noSuchMethodExceptionHandler(NoSuchMethodException ex) {
+        log.error("未知方法异常");
+
         return exceptionFormat(5, ex);
     }
 
-    //数组越界异常
     @ExceptionHandler(IndexOutOfBoundsException.class)
     public ResultVO indexOutOfBoundsExceptionHandler(IndexOutOfBoundsException ex) {
+        log.error("数组越界异常");
+
         return exceptionFormat(6, ex);
     }
 
-    //400错误
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ResultVO requestNotReadable(HttpMessageNotReadableException ex) {
-        System.out.println("400..requestNotReadable");
+        log.error("400错误");
+
         return exceptionFormat(7, ex);
     }
 
-    //400错误
     @ExceptionHandler({TypeMismatchException.class})
     public ResultVO requestTypeMismatch(TypeMismatchException ex) {
-        System.out.println("400..TypeMismatchException");
+        log.error("400错误");
+
         return exceptionFormat(8, ex);
     }
 
-    //400错误
     @ExceptionHandler({MissingServletRequestParameterException.class})
     public ResultVO requestMissingServletRequest(MissingServletRequestParameterException ex) {
-        System.out.println("400..MissingServletRequest");
+        log.error("400错误");
+
         return exceptionFormat(9, ex);
     }
 
-    //405错误
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public ResultVO request405(HttpRequestMethodNotSupportedException ex) {
+        log.error("405错误");
+
         return exceptionFormat(10, ex);
     }
 
-    //406错误
     @ExceptionHandler({HttpMediaTypeNotAcceptableException.class})
     public ResultVO request406(HttpMediaTypeNotAcceptableException ex) {
-        System.out.println("406...");
+        log.error("406错误");
+
         return exceptionFormat(11, ex);
     }
 
-    //500错误
     @ExceptionHandler({ConversionNotSupportedException.class, HttpMessageNotWritableException.class})
     public ResultVO server500(RuntimeException ex) {
-        System.out.println("500...");
+        log.error("500错误");
+
         return exceptionFormat(12, ex);
     }
 
-    //栈溢出
     @ExceptionHandler({StackOverflowError.class})
     public ResultVO requestStackOverflow(StackOverflowError ex) {
+        log.error("栈溢出");
+
         return exceptionFormat(13, ex);
     }
 
-    //其他错误
     @ExceptionHandler({Exception.class})
     public ResultVO exception(Exception ex) {
+        log.error("其他错误");
+
         return exceptionFormat(14, ex);
     }
 
-//    //自定义异常捕获
-//    @ExceptionHandler({MyException.class})
-//    public String myException(MyException ex) {
-//        System.out.println("1111111111111111111");
-//        return exceptionFormat(999, ex);
-//    }
+    //自定义异常捕获
+    @ExceptionHandler({YooException.class})
+    public ResultVO yooException(YooException ex) {
+        return exceptionFormat(999, ex);
+    }
 
     private <T extends Throwable> ResultVO exceptionFormat(Integer code, T ex) {
-        ex.printStackTrace();
-        return ResultVOUtil.error();
+        log.error(logExceptionFormat, code, ex);
+
+        return ResultVOUtil.error(code, ex.getMessage());
     }
 }

@@ -35,7 +35,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         QueryWrapper<Record> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("valid", 1);
         queryWrapper.orderByDesc("created_time");
-        Page<Record> page = new Page<>();
+        Page<Record> page = new Page<>(current,size);
         //2.执行查询
         IPage<RecordDto> recordDtoIPage = page(page, queryWrapper).convert(RecordServiceImpl::apply);
         //3.返回结果

@@ -1,6 +1,7 @@
 package com.rc.yooblog.controller;
 
 import com.rc.yooblog.common.dto.CommentDto;
+import com.rc.yooblog.common.dto.ReplyDto;
 import com.rc.yooblog.common.utils.IpUtils;
 import com.rc.yooblog.common.utils.ResultVOUtil;
 import com.rc.yooblog.common.vo.ResultVO;
@@ -39,7 +40,7 @@ public class CommentController {
 
     @GetMapping("/talks")
     @ApiOperation(value = "获取留言列表")
-    public ResultVO comments(@RequestParam(value = "currentPage", defaultValue = "1", required = false) Integer current, @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
+    public ResultVO comments(@RequestParam(value = "current", defaultValue = "1", required = false) Integer current, @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
         List<CommentDto> commentDtos = commentsInfoService.getTalks(current, size);
         return ResultVOUtil.success(commentDtos);
     }
@@ -67,8 +68,8 @@ public class CommentController {
     public ResultVO reply2Comment(@ApiParam("回复的主体Id,即cid") @RequestParam("id") String cid, @RequestParam(value = "nickName") String nickName, @RequestParam("email") String email, @RequestParam("website") String website, @RequestParam("content") String content, HttpServletRequest request) {
         //获取客户端ip
         String remoteIP = IpUtils.getRemoteIP(request);
-        commentsInfoService.addReply2Comment(cid, nickName, email, website, content, remoteIP);
-        return ResultVOUtil.success();
+        ReplyDto replyDto = commentsInfoService.addReply2Comment(cid, nickName, email, website, content, remoteIP);
+        return ResultVOUtil.success(replyDto);
     }
 
     @PostMapping("/reply/reply")

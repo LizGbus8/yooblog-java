@@ -51,9 +51,7 @@ public class IpUtils {
      */
     public static String getCity(String ip) {
         try {
-            log.info("url:{}", ADDRESS_API + "112.97.59.77");
             String result = HttpClientUtil.get(HttpConfig.custom().url(ADDRESS_API + ip).timeout(2000));
-            log.info("result:{}", result);
             String city = JSONObject.parseArray(result).get(2).toString();
             if (city.length() <= 0) {
                 city =  "C-53行星";
