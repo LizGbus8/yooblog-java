@@ -25,7 +25,7 @@ public class RecordController {
 
     @GetMapping("/records")
     @ApiOperation("获取归档列表")
-    public ResultVO records(@RequestParam(value = "current", defaultValue = "1", required = false) Integer current, @RequestParam(value = "size", defaultValue = "2", required = false) Integer size){
+    public ResultVO records(@RequestParam(value = "current", defaultValue = "1", required = false) Integer current, @RequestParam(value = "size", defaultValue = "8", required = false) Integer size){
         IPage<RecordDto> recordDtoIPage = recordService.getRecords(current, size);
         return ResultVOUtil.success(recordDtoIPage);
     }
