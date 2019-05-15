@@ -1,11 +1,13 @@
 package com.rc.yooblog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.rc.yooblog.common.dto.ReplyDto;
 import com.rc.yooblog.common.utils.IpUtils;
 import com.rc.yooblog.common.utils.KeyUtil;
 import com.rc.yooblog.entity.CommentsReply;
 import com.rc.yooblog.mapper.CommentsReplyMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,7 +28,7 @@ public class CommentsReplyServiceImpl extends ServiceImpl<CommentsReplyMapper, C
      * @param content
      * @param remoteIP
      */
-    public void addReply2Reply(String rid, String nickName, String email, String website, String content, String remoteIP) {
+    public ReplyDto addReply2Reply(String rid, String nickName, String email, String website, String content, String remoteIP) {
         //1.查询子回复
         CommentsReply reply = getById(rid);
         //2.查询地址
@@ -44,5 +46,12 @@ public class CommentsReplyServiceImpl extends ServiceImpl<CommentsReplyMapper, C
                 .setAddress(city)
                 .setContent(content);
         save(commentsReply);
+
+        //4.返回插入的数据
+        ReplyDto replyDto = new ReplyDto();
+        CommentsReply info = getById(commentsReply.getRId());
+        BeanUtils.copyProperties(info, replyDto);
+
+        return replyDto;
     }
 }
