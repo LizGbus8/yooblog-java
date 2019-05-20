@@ -7,7 +7,7 @@ import lombok.Data;
  * 描述：
  */
 @Data
-public class TabDto {
+public class TagDto {
 
     private Integer tId;
 

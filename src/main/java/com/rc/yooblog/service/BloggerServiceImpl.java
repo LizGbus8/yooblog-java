@@ -2,8 +2,8 @@ package com.rc.yooblog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rc.yooblog.entity.Users;
-import com.rc.yooblog.mapper.UsersMapper;
+import com.rc.yooblog.entity.Blogger;
+import com.rc.yooblog.mapper.BloggerMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  * 描述：
  */
 @Service
-public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements IService<Users> {
+public class BloggerServiceImpl extends ServiceImpl<BloggerMapper, Blogger> implements IService<Blogger> {
 }

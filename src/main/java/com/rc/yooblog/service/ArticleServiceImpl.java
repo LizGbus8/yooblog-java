@@ -27,7 +27,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     CommentsInfoServiceImpl commentsInfoService;
 
     @Autowired
-    TabServiceImpl tabService;
+    TagServiceImpl tagService;
 
     /**
      * 最近发布

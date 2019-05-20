@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Users {
-    @TableId(value = "uid", type = IdType.AUTO)
-    private Integer uid ;
+public class Blogger {
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id ;
     /** 名字 */
     private String nickname ;
     /** 说说 */

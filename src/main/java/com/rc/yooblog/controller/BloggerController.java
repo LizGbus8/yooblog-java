@@ -2,8 +2,8 @@ package com.rc.yooblog.controller;
 
 import com.rc.yooblog.common.utils.ResultVOUtil;
 import com.rc.yooblog.common.vo.ResultVO;
-import com.rc.yooblog.entity.Users;
-import com.rc.yooblog.service.UsersServiceImpl;
+import com.rc.yooblog.entity.Blogger;
+import com.rc.yooblog.service.BloggerServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(value = "用户信息", tags = "用户信息")
-public class UsersController {
+public class BloggerController {
 
     @Autowired
-    UsersServiceImpl usersService;
+    BloggerServiceImpl BloggerService;
 
-    @GetMapping("/user")
+    @GetMapping("/blogger")
     @ApiOperation("获取用户信息")
-    public ResultVO user(@RequestParam("uid") Integer uid) {
-        Users user = usersService.getById(uid);
+    public ResultVO user(@RequestParam("id") Integer id) {
+        Blogger user = BloggerService.getById(id);
         return ResultVOUtil.success(user);
     }
 }

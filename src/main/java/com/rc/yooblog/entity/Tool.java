@@ -1,19 +1,31 @@
-package com.rc.yooblog.common.dto;
+package com.rc.yooblog.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
 /**
- * 作者：flandre on 2019/4/25 15:33
- * 描述：
+ * <p>
+ * 文章 
+ * </p>
+ *
+ * @author flandre
+ * @since 2019-04-25
  */
 @Data
-public class UtilsDto {
+@Accessors(chain = true)
+public class Tool{
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 编号
      */
-    private Integer utId;
+    @TableId(value = "tool_id", type = IdType.AUTO)
+    private Integer toolId;
 
     /**
      * 标题
@@ -46,6 +58,11 @@ public class UtilsDto {
     private Integer shareCount;
 
     /**
+     * 公开 0隐私 1公开
+     */
+    private Integer pub;
+
+    /**
      * 关联文章
      */
     private String relevance;
@@ -59,5 +76,11 @@ public class UtilsDto {
      * 创建时间
      */
     private LocalDateTime createdTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updatedTime;
+
 
 }

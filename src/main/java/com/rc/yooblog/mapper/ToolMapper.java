@@ -1,7 +1,7 @@
 package com.rc.yooblog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.rc.yooblog.entity.Utils;
+import com.rc.yooblog.entity.Tool;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.rc.yooblog.entity.Utils;
  * @author flandre
  * @since 2019-04-25
  */
-public interface UtilsMapper extends BaseMapper<Utils> {
+public interface ToolMapper extends BaseMapper<Tool> {
 
 }

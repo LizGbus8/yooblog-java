@@ -1,9 +1,9 @@
 package com.rc.yooblog.controller;
 
-import com.rc.yooblog.common.dto.TabDto;
+import com.rc.yooblog.common.dto.TagDto;
 import com.rc.yooblog.common.utils.ResultVOUtil;
 import com.rc.yooblog.common.vo.ResultVO;
-import com.rc.yooblog.service.TabServiceImpl;
+import com.rc.yooblog.service.TagServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ import java.util.List;
  */
 @RestController
 @Api(value = "标签API",tags = "标签")
-public class TabCotroller {
+public class TagController {
     @Autowired
-    TabServiceImpl tabService;
+    TagServiceImpl TagService;
 
-    @GetMapping("/tabs")
+    @GetMapping("/tags")
     @ApiOperation(value = "获取所有的标签", notes = "分类标签")
-    public ResultVO tabs() {
-        List<TabDto> tabDtos =  tabService.getAllTab();
-        return ResultVOUtil.success(tabDtos);
+    public ResultVO Tags() {
+        List<TagDto> TagDtos =  TagService.getAllTag();
+        return ResultVOUtil.success(TagDtos);
     }
 }

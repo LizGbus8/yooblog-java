@@ -1,8 +1,7 @@
 package com.rc.yooblog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.rc.yooblog.entity.Tab;
-import com.rc.yooblog.entity.Users;
+import com.rc.yooblog.entity.Tag;
 
 /**
  * <p>
@@ -12,6 +11,6 @@ import com.rc.yooblog.entity.Users;
  * @author flandre
  * @since 2019-04-04
  */
-public interface UsersMapper extends BaseMapper<Users> {
+public interface TagMapper extends BaseMapper<Tag> {
 
 }
